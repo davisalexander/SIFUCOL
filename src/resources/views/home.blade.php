@@ -1,7 +1,8 @@
 @extends('layouts.main')
 
 @section('main_content')
-    <section>
-        <p>This is a test</p>
-    </section>
+
+    @include('partials._home')
+    @include('partials._people')
+
 @endsection
