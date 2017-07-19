@@ -3,8 +3,8 @@
 
 <head>
     <title>Bar Chart</title>
-    <script src="{{asset('assets/chartjs/chartjs.js')}}"></script>
-    <script src="{{asset('assets/chartjs/utils.js')}}"></script>
+    <script src="{{asset('libs/chartjs/chartjs.js')}}"></script>
+    <script src="{{asset('libs/chartjs/utils.js')}}"></script>
     <style>
     canvas {
         -moz-user-select: none;

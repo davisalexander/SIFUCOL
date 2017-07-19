@@ -1,10 +1,10 @@
 a{text-decoration:none !important}
 textarea{resize: none}
 
+body{overflow: hidden}
 
 #main{padding-top: 60px;}
-#people-section{display: none;}
-#main > *{overflow: hidden;}
+#people-section .btn{margin-left:1.5em}
 
 .sidebar,.custom-navbar{position: fixed !important;z-index:100}
 
@@ -12,7 +12,11 @@ textarea{resize: none}
     margin-top: -15px
 }
 
-.notification-list,.mainform{max-height: 70vh;overflow-y: auto;padding-top: 0 !important;padding-right: 15px !important}
+.notification-list,.mainform{
+    max-height: 70vh;
+    padding-top: 0 !important;
+    overflow-y: auto;
+}
 
 .notification{
     border:thin solid lightgrey;
@@ -54,10 +58,9 @@ textarea{resize: none}
 .brand{font-size: 20px;}
 .nav-item{background-color: lightseagreen;margin: 0 -15px;padding: 15px;color:white}
 
-
 .list-group{margin:0 -15px;padding: 1.5em 0}
 .list-group li{list-style: none}
-.list-header{font-size: small;font-weight: bold;color:#888 !important;padding: 5px;display: block;margin-top: -10px}
+.list-header{font-size: small;font-weight: bold;color:#888 !important;padding: 5px;display: block;margin-top: -10px;text-indent: .5em}
 .list-group.child{padding: 0 15px;background-color: #e5e5e5;color: #444;}
 /*.list-group.child .active{
     background-color: #759CBE;

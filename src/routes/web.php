@@ -12,8 +12,16 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('index');
 });
+
+Route::get('home', function () {
+    return view('templates.home');
+});
+
+/*Route::get('people', function () {
+    return view('templates.people');
+});*/
 
 Route::get('chart1', function () {
     return view('charts.example1');
@@ -22,3 +30,6 @@ Route::get('chart1', function () {
 Route::get('chart2', function () {
     return view('charts.example2');
 });
+
+
+Route::resource('people', 'PersonaController');
