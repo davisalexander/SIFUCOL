@@ -32,4 +32,9 @@ Route::get('chart2', function () {
 });
 
 
-Route::resource('people', 'PersonaController');
+//Route::resource('person', 'PersonaController');
+Route::get('person', 'PersonaController@index');
+Route::post('person', 'PersonaController@store');
+Route::delete('person/{id}', 'PersonaController@destroy');
+Route::get('person/index', 'PersonaController@template');
+Route::get('person/create', 'PersonaController@template');

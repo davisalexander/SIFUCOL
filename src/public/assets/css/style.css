@@ -3,26 +3,24 @@ textarea{resize: none}
 
 body{overflow: hidden}
 
-#main{padding-top: 60px;}
-#people-section .btn{margin-left:1.5em}
+.modal-body{max-height: 70vh;overflow-y: auto}
 
-.sidebar,.custom-navbar{position: fixed !important;z-index:100}
+#main{margin-top:60px; height: calc(100vh - 60px);padding: 2em 0;overflow-y: auto;}
+
+.sidebar,.custom-navbar{position: fixed !important;z-index:100;}
+.sidebar{overflow-x: hidden}
 
 .recent-activity{
     margin-top: -15px
 }
 
-.notification-list,.mainform{
-    max-height: 70vh;
-    padding-top: 0 !important;
-    overflow-y: auto;
-}
-
-.notification{
+.notification.alert{
     border:thin solid lightgrey;
     border-radius: 3px;
     margin: 1em 0;
-    box-shadow: 0 1px 3px lightgrey
+    box-shadow: 0 1px 3px lightgrey;
+    padding: unset;
+    cursor: unset
 }
 .notification.danger{border-left: thick solid #DC5353}
 .notification.warning{border-left: thick solid #EBB93B}
@@ -41,12 +39,20 @@ body{overflow: hidden}
     color:white
 }
 
+.table.personindex{
+    table-layout:fixed;
+    max-height:80vh
+}
+.table th{text-indent: 1em}
+
 .custom-navbar{
     display: block;
     height:60px;
     background-color: #efefef;
     box-shadow: 1px 0 4px #aaa;
 }
+.custom-navbar .dropdown{padding-top:6px !important;padding-bottom: 0 !important;transition: .3s;border-bottom:thick solid transparent}
+.custom-navbar .dropdown:hover{background-color: #f8f8f8;border-bottom: thick solid lightskyblue;transition:.3s}
 
 .sidebar{
     height: 100vh;
@@ -59,7 +65,7 @@ body{overflow: hidden}
 .nav-item{background-color: lightseagreen;margin: 0 -15px;padding: 15px;color:white}
 
 .list-group{margin:0 -15px;padding: 1.5em 0}
-.list-group li{list-style: none}
+.list-group > li{list-style: none;cursor: pointer}
 .list-header{font-size: small;font-weight: bold;color:#888 !important;padding: 5px;display: block;margin-top: -10px;text-indent: .5em}
 .list-group.child{padding: 0 15px;background-color: #e5e5e5;color: #444;}
 /*.list-group.child .active{
@@ -80,3 +86,25 @@ a.list-item, .nav-item > a{color:unset}
 /*.list-item:hover{
     background-color: #e8e8e8;
 }*/
+
+.dropdown-menu > li > * {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    font-weight: 400;
+    line-height: 1.42857143;
+    color: #333;
+    white-space: nowrap;
+}
+.dropdown-menu > li > *:hover {
+    color: #262626;
+    text-decoration: none;
+    background-color: #f5f5f5;
+}
+
+.btn-rest{
+    border:none;
+    background-color:transparent;
+}
+.btn-rest.btn-delete{color:#DC5353}
+.btn-rest.btn-edit{color:#428BCA}

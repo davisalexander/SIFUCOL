@@ -6,8 +6,8 @@
         <li>
             <a class="list-item" data-toggle="collapse" data-target="#people"><span class="glyphicon glyphicon-user"></span> Personas</a>
             <ul id="people" class="list-group child collapse">
+                <li><a class="list-item" href="#!person/index">Ver registros</a></li>
                 <li><a class="list-item" href="#!person/create">Nuevo registro</a></li>
-                <!--<li><a class="list-item" href="#">Nuevo expediente</a></li>-->
             </ul>
         </li>
         <li>

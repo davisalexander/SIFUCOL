@@ -1,35 +1,37 @@
-var app = angular.module('App',['ngRoute']);
+var app = angular.module('App',['ngRoute','ngSanitize']);
 
 /*
 *   Routes for SPA control and dynamic content management
 */
 app.config(function($routeProvider){
     $routeProvider
-    .when("/",{templateUrl:'./home'})
-    .when("/people",{templateUrl:'./people/create'});
-})
 
-/*
-*   Controller for entity 'Persona'
-*/
-app.controller('PersonaController',function($scope,$http){
-    // Bind click action to scope context
-    $scope.submit=function(){
-        var $form = $('#people-section');
-        $http.post('./people',jQueryToJson($form,'name'))
-        .then(
-            function(response){
-                console.log(response.data);
-                alert('Transaction '+((response.data)?'succeeded!':'failed :('));
+    /*
+    *   Routing for root location
+    */
+    .when("/",{templateUrl:'./home',controller:function(){$('#sectionheader').text('Actividad reciente');}})
 
-            },   //Do something with response data from server
-            function(){
-                console.log('Something went wrong :(');
-            }    // Handle possible server errors
-        )
+    /*
+    *   Routing for 'Person'
+    */
+    .when("/person/create",{templateUrl:'./person/create', controller:'PersonController'})
+    .when("/person/index",{template:'<ng-include src="\'./person/index\'">Cargando...</ng-include>', controller:'PersonController'});
+});
+
+app.controller('Main',function($scope){
+    $scope.modal={
+        title:'',
+        btntext:'',
+        body:null,
+        type:''
     }
 });
 
+function compileContent(element, html, angular, service, scope, replace) {
+    return (replace)?
+        angular.element(element).empty().append(service(html)(scope))
+        :angular.element(element).append(service(html)(scope));
+}
 
 function jQueryToJson(obj, key){
     var data = {}

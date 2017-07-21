@@ -5,27 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 
-class PersonaController extends Controller
+class PersonaController extends ModelController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-        return view('templates.people');
+    public function index(){
+        return response()->json(['personas'=>DB::table('persona')->get()]);
     }
 
     /**
@@ -93,5 +77,8 @@ class PersonaController extends Controller
     public function destroy($id)
     {
         //
+        return response()->json([
+            'result'=>DB::table('persona')->where('cedula', '=', $id)->delete()
+        ]);
     }
 }
