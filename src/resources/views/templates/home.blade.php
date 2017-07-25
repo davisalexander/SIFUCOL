@@ -1,4 +1,4 @@
-<div class="notification-list col-lg-12">
+<div class="notification-list">
     <ul class="col-lg-6 col-lg-push-3 list-group">
         <li class="notification warning alert">
             <button class="close" type="button" title="cerrar">&times;</button>

@@ -1,4 +1,4 @@
-a{text-decoration:none !important}
+a{text-decoration:none !important;cursor: pointer;}
 textarea{resize: none}
 
 body{overflow: hidden}
@@ -10,9 +10,9 @@ body{overflow: hidden}
 .sidebar,.custom-navbar{position: fixed !important;z-index:100;}
 .sidebar{overflow-x: hidden}
 
-.recent-activity{
+/*.recent-activity{
     margin-top: -15px
-}
+}*/
 
 .notification.alert{
     border:thin solid lightgrey;

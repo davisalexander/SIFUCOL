@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 
-class PersonaController extends ModelController
-{
+class PersonaController{
 
     public function index(){
         return response()->json(['personas'=>DB::table('persona')->get()]);
@@ -46,17 +45,6 @@ class PersonaController extends ModelController
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -65,7 +53,15 @@ class PersonaController extends ModelController
      */
     public function update(Request $request, $id)
     {
-        //
+        return response()->json([
+            'result'=>DB::table('persona')
+                ->where('cedula', $request->cedula)
+                ->update([
+                    'nombre'=>$request->nombre,
+                    'apellidos'=>$request->apellidos,
+                    'ocupacion'=>$request->ocupacion
+                ])
+        ]);
     }
 
     /**

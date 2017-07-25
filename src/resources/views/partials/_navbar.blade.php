@@ -2,7 +2,7 @@
     <div class="row">
         <h3 id="sectionheader" class="text-center col-lg-9 col-lg-push-1"></h3>
         <div class="col-lg-3 dropdown">
-            <a href="#" data-toggle="dropdown">
+            <a data-toggle="dropdown">
                 <div class="col-sm-2">
                     <img src="http://www.edmilenio.com/media/wysiwyg/no-image.png" height="40" width="40" alt="Profile picture" class="img-circle left">
                 </div>
