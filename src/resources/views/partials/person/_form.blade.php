@@ -54,7 +54,7 @@
         </div>
         <div class="form-group col-sm-10 col-sm-push-1">
             <label>Dirección exacta:</label>
-            <textarea class="form-control" name="direccion" rows="5"></textarea>
+            <textarea class="form-control" name="direccion" rows="5" ng-model="persona.selected.direccion">@{{persona.selected.direccion}}</textarea>
         </div>
         <div class="form-group col-sm-10 col-sm-push-1">
             <label>Contacto(s):</label>
