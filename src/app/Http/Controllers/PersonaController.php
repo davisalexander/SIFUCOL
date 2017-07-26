@@ -4,11 +4,43 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use Faker\Factory as Faker;
 
 class PersonaController{
 
+    private $maxrecords=16;
+
+    public function seed(Request $request){
+        $faker = Faker::create();
+
+        if($request->wipe){
+            DB::table('persona')->delete();
+        }
+        else {
+            # code...
+        }
+        for($i=0; $i < $request->maxrecords; $i++){
+            DB::table('persona')->insert([
+                'cedula'=>$faker->randomNumber(9,true),
+                'nombre'=>$faker->firstname,
+                'apellidos'=>"{$faker->lastname} {$faker->lastname}",
+                'ocupacion'=>$faker->jobTitle,
+                'tels'=>$faker->tollFreephoneNumber,
+                'direccion'=>$faker->address,
+                'contactos'=>$faker->text(100)
+            ]);
+        }
+
+
+        return $this->index();
+    }
+
     public function index(){
-        return response()->json(['personas'=>DB::table('persona')->get()]);
+        $result=DB::table('persona')->paginate($this->maxrecords);
+        return response()->json([
+            'personas'=>$result->items(),
+            'last'=>$result->lastPage()
+        ]);
     }
 
     /**
@@ -59,7 +91,8 @@ class PersonaController{
                 ->update([
                     'nombre'=>$request->nombre,
                     'apellidos'=>$request->apellidos,
-                    'ocupacion'=>$request->ocupacion
+                    'ocupacion'=>$request->ocupacion,
+                    'tels'=>$request->tels
                 ])
         ]);
     }
@@ -72,9 +105,13 @@ class PersonaController{
      */
     public function destroy($id)
     {
-        //
+        $result=DB::table('persona')->where('cedula', '=', $id)->delete();
+        $last=DB::table('persona')->paginate($this->maxrecords)->lastPage();
+
         return response()->json([
-            'result'=>DB::table('persona')->where('cedula', '=', $id)->delete()
+            'result'=>$result,
+            'last'=>$last,
+            'max'=>$this->maxrecords
         ]);
     }
 }

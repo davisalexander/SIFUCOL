@@ -4,8 +4,8 @@
 <head>
 	<title>Time Scale Point Data</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
-    <script src="{{asset('assets/chartjs/chartjs.js')}}"></script>
-    <script src="{{asset('assets/chartjs/utils.js')}}"></script>
+    <script src="{{asset('libs/chartjs/chartjs.js')}}"></script>
+    <script src="{{asset('libs/chartjs/utils.js')}}"></script>
 	<style>
     canvas {
         -moz-user-select: none;

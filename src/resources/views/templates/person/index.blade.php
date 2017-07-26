@@ -1,24 +1,38 @@
 <div class="col-md-10 col-md-push-1">
+
     <nav class="navbar navbar-default navbar-sma" role="navigation">
         <span class="navbar-text"><b>Columnas visibles</b></span>
         <form class="navbar-form" style="padding-top:4px">
-            <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.cedula" ng-checked="true">Identificación</label>
+            <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.cedula">Identificación</label>
             <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.nombre">Nombre</label>
             <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.apellidos">Apellidos</label>
             <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.ocupacion">Ocupacion</label>
-            <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.region">Region</label>
+            <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.tels">Teléfonos</label>
+            <input type="number" ng-model="maxrecords" ng-value="0">
+            <button type="button" ng-click="seed(maxrecords,false)">Seed</button>
+            <button type="button" ng-click="seed(maxrecords,true)">Wipe & seed</button>
+            <button type="button" ng-click="seed(0,true)">Wipe all</button>
         </form>
     </nav>
 
     <div class="table-responsive">
+        <nav class="text-center" style="padding:0;margin:0">
+            <ul class="pagination pagination-sm">
+                <li><span>&laquo;</span></li>
+                <li ng-repeat="i in persona.pagination.links">
+                    <a ng-click="index(i)">@{{i}}</a>
+                </li>
+                <li><span>&raquo;</span></li>
+            </ul>
+        </nav>
         <table class="table table-hover table-striped personindex">
             <thead>
                 <tr>
-                    <th ng-show="persona.visible.cedula">Id.</th>
-                    <th ng-show="persona.visible.nombre">Nombre</th>
-                    <th ng-show="persona.visible.apellidos">Apellidos</th>
-                    <th ng-show="persona.visible.ocupacion">Ocupación</th>
-                    <th ng-show="persona.visible.region">Region</th>
+                    <th ng-show="persona.visible.cedula"><button type="button" class="btn btn-table-header">Id.<span class="caret"></span></button></th>
+                    <th ng-show="persona.visible.nombre"><button type="button" class="btn btn-table-header">Nombre<span class="caret"></span></button></th>
+                    <th ng-show="persona.visible.apellidos"><button type="button" class="btn btn-table-header">Apellidos<span class="caret"></span></button></th>
+                    <th ng-show="persona.visible.ocupacion"><button type="button" class="btn btn-table-header">Ocupación<span class="caret"></span></button></th>
+                    <th ng-show="persona.visible.tels"><button type="button" class="btn btn-table-header">Teléfonos<span class="caret"></span></button></th>
                     <th></th>
                 </tr>
             </thead>
@@ -29,10 +43,10 @@
                     <td ng-show="persona.visible.nombre">@{{p.nombre}}</td>
                     <td ng-show="persona.visible.apellidos">@{{p.apellidos}}</td>
                     <td ng-show="persona.visible.ocupacion">@{{p.ocupacion}}</td>
-                    <td ng-show="persona.visible.region">@{{p.region}}</td>
+                    <td ng-show="persona.visible.tels">@{{p.tels}}</td>
                     <td>
                         <button type="button" class="btn-rest btn-edit" ng-click="edit(this,p)" data-toggle="modal" data-target="#modal"><span class="glyphicon glyphicon-pencil"></span></button>
-                        <button type="button" class="btn-rest btn-delete" ng-click="delete(this,$event)"><span class="glyphicon glyphicon-trash"></span></button>
+                        <button type="button" class="btn-rest btn-delete" ng-click="delete(this,$event,persona.pagination.page)"><span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
             </tbody>

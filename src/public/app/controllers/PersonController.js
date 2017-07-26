@@ -3,7 +3,9 @@
 *   Controller for entity 'Persona'
 */
 app.controller('PersonController',function($scope,$http,$location){
+
     var Content = $scope.$parent.content,
+    Persist = $scope.$parent.persist,
     request_method = $location.path().replace('/person/','');
 
     Content.scope=$scope;
@@ -11,19 +13,29 @@ app.controller('PersonController',function($scope,$http,$location){
     Content.target=document.getElementById('sectionheader');
 
     $scope.persona={
-        visible:{
+        selected:{},
+        update:{},
+        // Sets default visible columns config for `Person` index
+        // if not present in persitance service.
+        // If present, then gets the data stored with the specified key
+        pagination:{links:[]},
+        visible:Persist.get('PersonController$persona.visible',{
             cedula:true,
             nombre:true,
             apellidos:true,
             ocupacion:true,
-            region:false
-        }
+            tels:false
+        })
     };
+    Persist.set('PersonController$persona.visible',$scope.persona.visible, false);
+
+    $scope.seed=function(maxrecords, wipe){
+        $http.get('./person/seed?maxrecords='+maxrecords+'&wipe='+wipe)
+        .then(function(response){$scope.personas=response.data.personas;});
+    }
 
     $scope.save=function(){
-        console.log('Add new person');
-        var $form = $('#persondata');
-        $http.post('./person',jQueryToJson($form,'name'))
+        $http.post('./person',jQueryToJson($('#personcreate'),'name'))
         .then(
             function(response){
                 console.log('Transaction '+((response.data.result)?'succeeded!':'failed :('));
@@ -36,30 +48,28 @@ app.controller('PersonController',function($scope,$http,$location){
     };
 
     $scope.edit=function(e,scope){
+
+        mergeObjs(scope, $scope.persona.selected, ['$$hashKey']);
+
         $scope.$parent.modal.title="Actualizar datos de persona";
         $scope.$parent.modal.type="warning";
         $scope.$parent.modal.btntext="Guardar cambios";
-        $scope.$parent.modal.click=function(){
-            $scope.update();
-        };
+        $scope.$parent.modal.click=$scope.update;
 
         Content.remote=true;
         Content.target=$('#modal .modal-body')[0];
         Content.template='./person/edit';
         Content.compile();
 
-        $scope.persona.selected=e.p;
         $scope.persona.update=scope;
     };
 
     $scope.update=function(){
-        $http.put('./person/'+$scope.persona.cedula,jQueryToJson($('#persondata'),'name'))
+        $http.put('./person/'+$scope.persona.selected.cedula,$scope.persona.selected)
         .then(
             function(response){
                 console.log('Transaction '+((response.data.result)?'succeeded!':'failed :('));
-                $scope.persona.update.nombre=$scope.persona.selected.nombre;
-                $scope.persona.update.apellidos=$scope.persona.selected.apellidos;
-                $scope.persona.update.ocupacion=$scope.persona.selected.ocupacion;
+                mergeObjs($scope.persona.selected, $scope.persona.update, ['$$hashKey']);
                 $('#modal').modal('hide');
             },
             function(){
@@ -68,14 +78,19 @@ app.controller('PersonController',function($scope,$http,$location){
         );
     };
 
-    $scope.delete=function(e, $event){
-        if (confirm('¿Realmente desea eliminar a esta persona?\n*Esta operación es irreversible')) {
-            $http.delete('./person/'+e.p.cedula,jQueryToJson($('#indexperson'),'name'))
+    $scope.delete=function(e, $event, page){
+        if (true/*confirm('¿Realmente desea eliminar a esta persona?\n*Esta operación es irreversible')*/) {
+            $http.delete('./person/'+e.p.cedula+'?page='+page,jQueryToJson($('#indexperson'),'name'))
             .then(
                 function(response){
-                    console.log(response.data.result);
                     console.log('Transaction '+((response.data.result)?'succeeded!':'failed :('));
-                    $($event.target).parents('tr').fadeOut({complete:function(){angular.element(this).remove();}});
+                    $scope.persona.pagination.links=[];
+                    for (var i = 1; i <= response.data.last; i++) {$scope.persona.pagination.links[i-1]=i;}
+                    $($event.target).parents('tr').fadeOut({complete:function(){
+                        angular.element(this).remove();
+                        if($scope.personas.length === 1){$scope.index(page-1);}
+                        else if (response.data.last+1 !== page && response.data.last !== page) {$scope.index(page);}
+                    }});
                 },
                 function(){
                     alert('Something went wrong :(');
@@ -84,20 +99,23 @@ app.controller('PersonController',function($scope,$http,$location){
         }
     };
 
-    $scope.index=function(current,request){
+    $scope.index=function(page=1){
+        $scope.persona.pagination.page=(page < 1)? 1 : page;
+
+        Content.remote=true;
+        Content.template='./person/header';
+        Content.compile();
 
         /*
         *   maxrecords: Max number of records to display
         *   current: Current record page
         *   request: Requested record page
         */
-        $http.get('./person',{maxrecords:0,current:0,request:0})
+        $http.get('./person?page='+page)
         .then(
             function(response){
                 $scope.personas=response.data.personas;
-                Content.remote=true;
-                Content.template='./person/header';
-                Content.compile();
+                for (var i = 1; i <= response.data.last; i++) {$scope.persona.pagination.links[i-1]=i;}
             },
             function(){alert('Something went wrong :(');}
         );
@@ -114,5 +132,4 @@ app.controller('PersonController',function($scope,$http,$location){
         $scope.index();
         break;
     }
-
 });

@@ -79,11 +79,11 @@
             //     });
             // });
 
-            $('form.async').ready(function(e){
-                $('form.async').submit(function(e){
-                    e.preventDefault();
-                });
-            });
+            // $('form.async').ready(function(e){
+            //     $('form.async').submit(function(e){
+            //         e.preventDefault();
+            //     });
+            // });
 
         });
     </script>

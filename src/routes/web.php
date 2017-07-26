@@ -19,10 +19,6 @@ Route::get('home', function () {
     return view('templates.home');
 });
 
-/*Route::get('people', function () {
-    return view('templates.people');
-});*/
-
 Route::get('chart1', function () {
     return view('charts.example1');
 });
@@ -37,6 +33,7 @@ Route::get('person', 'PersonaController@index');
 Route::post('person', 'PersonaController@store');
 Route::put('person/{id}', 'PersonaController@update');
 Route::delete('person/{id}', 'PersonaController@destroy');
+Route::get('person/seed', 'PersonaController@seed');
 
 Route::get('person/header', function(){return view('partials.person._header');});
 Route::get('person/edit', function(){return view('partials.person._form');});

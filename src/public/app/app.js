@@ -19,23 +19,7 @@ app.config(function($routeProvider){
 });
 
 app.controller('Main',function($scope,$compile,$templateRequest){
-    $scope.modal={};
-
-    $scope.content={
-        remote:false,
-        emptyFirst:false,
-        replace:false,
-        compile:function(){
-            if(!this.remote){
-                compile(this,this.template);
-            }
-            else if (this.remote) {
-                $templateRequest(this.template).then(function(html){compile($scope.content, html);});
-            }
-        }
-    };
-
-    function compile(config,template){
+    var compile = function(config,template){
         var element = angular.element(config.target);
         if (!config.replace) {
 
@@ -45,7 +29,29 @@ app.controller('Main',function($scope,$compile,$templateRequest){
         }
         else {element.replaceWith($compile(template)(config.scope));}
     }
+    var persistData={};
 
+    $scope.persist={
+        set:function(key, value, overwrite){
+            if(!persistData[key]){persistData[key]=value;}
+            else {if (overwrite) {persistData[key]=value;}}
+        },
+        get:function(key, def){return (!persistData[key])? def : persistData[key];}
+    };
+    $scope.modal={};
+    $scope.content={
+        remote:false,
+        emptyFirst:false,
+        replace:false,
+        compile:function(){
+            if(!this.remote){
+                compile(this,this.template);
+            }
+            else {
+                $templateRequest(this.template).then(function(html){compile($scope.content, html);});
+            }
+        }
+    };
 });
 
 function jQueryToJson(obj, key){
@@ -54,4 +60,12 @@ function jQueryToJson(obj, key){
         data[this.getAttribute(key)]=this.value;
     });
     return data;
+}
+
+function mergeObjs(_this, _into, except){
+    for (var key in _this) {
+        for (var i in except) {
+            if(key !== except[i]){_into[key]=_this[key];}
+        }
+    }
 }
