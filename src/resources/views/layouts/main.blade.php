@@ -29,6 +29,7 @@
 
     <script src="{{asset('app/app.js')}}"></script>
     <script src="{{asset('app/controllers/PersonController.js')}}"></script>
+    <script src="{{asset('app/controllers/RecordsController.js')}}"></script>
 
     <title>Fundacion Colono</title>
 </head>

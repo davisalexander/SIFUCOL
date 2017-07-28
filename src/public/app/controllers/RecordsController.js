@@ -1,72 +1,29 @@
-
-/*
-*   Controller for entity 'Persona'
-*/
-app.controller('PersonController',function($scope,$http,$location){
+app.controller('RecordsController',function($scope, $http, $location){
 
     var Content = $scope.$parent.content,
     Persist = $scope.$parent.persist,
-    request_method = $location.path().replace('/person/','');
+    request_method = $location.path().replace('/records/','');
 
     Content.scope=$scope;
     Content.emptyFirst=true;
     Content.target=document.getElementById('sectionheader');
-
-    $scope.persona={
-        selected:{},
-        update:{},
-        // Sets default visible columns config for `Person` index
-        // if not present in persitance service.
-        // If present, then gets the data stored with the specified key
-        pagination:{links:[]},
-        visible:Persist.get('PersonController$persona.visible',{
-            cedula:true,
-            nombre:true,
-            apellidos:true,
-            ocupacion:true,
-            tels:false
-        })
-    };
-    Persist.set('PersonController$persona.visible',$scope.persona.visible, false);
 
     $scope.seed=function(maxrecords, wipe){
         $http.get('./person/seed?maxrecords='+maxrecords+'&wipe='+wipe)
         .then(function(response){$scope.personas=response.data.personas;});
     }
 
-    $scope.save=function(f=false){
-
-        var data={
-            persona:jQueryToJson($('#personcreate'),'name')
-        },
-        insert=function(){
-            console.log(data);
-            $http.post('./person',data)
-            .then(
-                function(response){console.log('Transaction '+((response.data.success)?'succeeded!':'failed :('));},
-                function(){alert('Something went wrong :(');}    // Handle possible server errors
-            );
-        };
-
-        if($scope.withrecord){
-            // Create record form if not created
-            if($(Content.target).find('#recordcreate').length===0){
-                $scope.$parent.modal.title="Crear expediente";
-                $scope.$parent.modal.type="primary";
-                $scope.$parent.modal.btntext="Guardar y crear expediente";
-                $scope.$parent.modal.click=function(){
-                    data.expediente=jQueryToJson($('#recordcreate'),'name');
-                    insert();
-                };
-
-                Content.remote=true;
-                Content.target=$('#modal .modal-body')[0];
-                Content.template='./records/create';
-                Content.compile();
-            }
-        }
-        else {insert();}
-
+    $scope.save=function(){
+        $http.post('./person',jQueryToJson($('#personcreate'),'name'))
+        .then(
+            function(response){
+                console.log('Transaction '+((response.data.result)?'succeeded!':'failed :('));
+                //Show success msg
+            },
+            function(){
+                alert('Something went wrong :(');
+            }    // Handle possible server errors
+        );
     };
 
     $scope.edit=function(e,scope){
@@ -146,7 +103,7 @@ app.controller('PersonController',function($scope,$http,$location){
     switch (request_method) {
         case 'create':
         Content.remote=false;
-        Content.template='<span>`Title placeholder`</span> <button class="btn btn-success btn-sm" type="button" ng-click="save()" data-toggle="{{withrecord?\'modal\':\'\'}}" data-target="{{withrecord?\'#modal\':\'\'}}">Guardar registro</button>';
+        Content.template='<span>`Title placeholder`</span> <button class="btn btn-success btn-sm" type="button" ng-click="save()">Guardar registro</button>';
         Content.compile();
         break;
 
@@ -154,4 +111,5 @@ app.controller('PersonController',function($scope,$http,$location){
         $scope.index();
         break;
     }
+
 });

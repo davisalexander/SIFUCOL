@@ -3,12 +3,14 @@
     <nav class="navbar navbar-default navbar-sma" role="navigation">
         <span class="navbar-text"><b>Columnas visibles</b></span>
         <form class="navbar-form" style="padding-top:4px">
+            <input type="checkbox" name="prueba" >
             <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.cedula">Identificación</label>
             <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.nombre">Nombre</label>
             <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.apellidos">Apellidos</label>
             <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.ocupacion">Ocupacion</label>
             <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.tels">Teléfonos</label>
             <input type="number" ng-model="maxrecords" ng-value="0">
+            <button type="button" ng-click="seed(maxrecords,false)">Seed</button>
             <button type="button" ng-click="seed(maxrecords,true)">Wipe & seed</button>
             <button type="button" ng-click="seed(0,true)">Wipe all</button>
         </form>

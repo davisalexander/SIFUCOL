@@ -15,16 +15,20 @@ app.config(function($routeProvider){
     *   Routing for 'Person'
     */
     .when("/person/create",{templateUrl:'./person/create', controller:'PersonController'})
-    .when("/person/index",{templateUrl:'./person/index', controller:'PersonController'});
+    .when("/person/index",{templateUrl:'./person/index', controller:'PersonController'})
+
+    /*
+    *   Routing for 'Records'
+    */
+    .when("/records/create",{templateUrl:'./records/create', controller:'RecordsController'})
+    .when("/records/index",{templateUrl:'./records/index', controller:'RecordsController'});
 });
 
 app.controller('Main',function($scope,$compile,$templateRequest){
     var compile = function(config,template){
         var element = angular.element(config.target);
-        if (!config.replace) {
-
+        if(!config.replace){
             if(config.emptyFirst){element.empty();}
-
             element.append($compile(template)(config.scope));
         }
         else {element.replaceWith($compile(template)(config.scope));}
@@ -43,9 +47,17 @@ app.controller('Main',function($scope,$compile,$templateRequest){
         remote:false,
         emptyFirst:false,
         replace:false,
+        reset:function(){
+            this.remote=false;
+            this.emptyFirst=false;
+            this.replace=false;
+            this.template=null;
+            this.target=null;
+        },
         compile:function(){
             if(!this.remote){
                 compile(this,this.template);
+                //this.reset();
             }
             else {
                 $templateRequest(this.template).then(function(html){compile($scope.content, html);});

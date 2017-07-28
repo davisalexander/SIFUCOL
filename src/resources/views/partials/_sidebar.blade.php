@@ -13,12 +13,10 @@
         <li>
             <a class="list-item" data-toggle="collapse" data-target="#records"><span class="glyphicon glyphicon-folder-open"></span> Expedientes</a>
             <ul id="records" class="list-group child collapse">
-                <li><a class="list-item" href="#">Prueba</a></li>
-                <li><a class="list-item" href="#">Nuevo expediente</a></li>
+                <li><a class="list-item" href="#!records/create">Nuevo expediente</a></li>
             </ul>
         </li>
         <li><a class="list-item" href="#"><span class="glyphicon glyphicon-home"></span> Visitantes</a></li>
-        <li><a class="list-item" href="#"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a></li>
         <li><a class="list-item" href="#" data-toggle="collapse" data-target="#statistics">
             <span class="glyphicon glyphicon-stats"></span> Estadísticas</a>
             <ul id="statistics" class="list-group child collapse">

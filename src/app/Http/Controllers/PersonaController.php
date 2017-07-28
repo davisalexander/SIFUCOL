@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use Faker\Factory as Faker;
 
-class PersonaController{
+class PersonaController extends Controller{
 
     private $maxrecords=16;
 
@@ -49,21 +49,42 @@ class PersonaController{
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-        return response()->json([
-            'result'=>DB::table('persona')->insert([
-                'cedula'=>$request->cedula,
-                'nombre'=>$request->nombre,
-                'apellidos'=>$request->apellidos,
-                'ocupacion'=>$request->ocupacion,
-                'tels'=>$request->tels,
-                'direccion'=>$request->direccion,
-                'contactos'=>$request->contactos
-            ])
-        ]);
-    }
+     public function store(Request $request)
+     {
+
+         $persona=$request->persona;
+
+         // Store new person
+         $result = DB::table('persona')
+         ->insert([
+             'cedula'=>$persona['cedula'],
+             'nombre'=>$persona['nombre'],
+             'apellidos'=>$persona['apellidos'],
+             'ocupacion'=>$persona['ocupacion'],
+             'tels'=>$persona['tels'],
+             'direccion'=>$persona['direccion'],
+             'contactos'=>$persona['contacto']
+         ]);
+
+         // Store new record into person if withrecord flag is enabled (true)
+         if($result && $persona['withrecord']){
+             $expediente=$request->expediente;
+             return response()->json([
+                 'success'=>DB::table('expedientes')
+                 ->insert([
+                     'persona'=>$persona['cedula'],
+                     'ayuda'=>$expediente['ayuda'],
+                     'prioridad'=>$expediente['prioridad'],
+                     'monto'=>$expediente['monto'],
+                     'monto'=>$expediente['descripcion'],
+                     'recomendaciones'=>$expediente['recomendaciones']
+                     //'fecha_creacion'=>$request->contactos
+                 ])
+             ]);
+         }
+
+         return response()->json(['success'=>$result]);
+     }
 
     /**
      * Display the specified resource.
