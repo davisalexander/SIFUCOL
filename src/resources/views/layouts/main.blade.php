@@ -26,6 +26,7 @@
     <script src="{{asset('libs/angularjs/angular.1.6.4.min.js')}}"></script>
     <script src="{{asset('libs/angularjs/angular-route.1.6.4.min.js')}}"></script>
     <script src="{{asset('libs/angularjs/angular-sanitize.1.6.4.min.js')}}"></script>
+    <script src="{{asset('libs/angularjs-ui-bootstrap/ui-bootstrap-tpls-2.5.0.min.js')}}"></script>
 
     <script src="{{asset('app/app.js')}}"></script>
     <script src="{{asset('app/controllers/PersonController.js')}}"></script>

@@ -39,7 +39,8 @@ class PersonaController extends Controller{
         $result=DB::table('persona')->paginate($this->maxrecords);
         return response()->json([
             'personas'=>$result->items(),
-            'last'=>$result->lastPage()
+            'last'=>$result->lastPage(),
+            'total'=>$result->total()
         ]);
     }
 
@@ -131,8 +132,7 @@ class PersonaController extends Controller{
 
         return response()->json([
             'result'=>$result,
-            'last'=>$last,
-            'max'=>$this->maxrecords
+            'last'=>$last
         ]);
     }
 }

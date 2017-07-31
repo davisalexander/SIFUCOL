@@ -1,4 +1,4 @@
-var app = angular.module('App',['ngRoute','ngSanitize']);
+var app = angular.module('App',['ngRoute','ngSanitize','ui.bootstrap']);
 
 /*
 *   Routes for SPA control and dynamic content management
@@ -23,6 +23,17 @@ app.config(function($routeProvider){
     .when("/records/create",{templateUrl:'./records/create', controller:'RecordsController'})
     .when("/records/index",{templateUrl:'./records/index', controller:'RecordsController'});
 });
+
+app.config(['uibPaginationConfig',function(conf){
+    conf.previousText="Anterior";
+    conf.nextText="Siguiente";
+    conf.lastText="Último";
+    conf.firstText="Primero";
+    conf.boundaryLinks=true;
+    conf.directionLinks=false;
+    conf.forceEllipses=true;
+    conf.rotate=true;
+}]);
 
 app.controller('Main',function($scope,$compile,$templateRequest){
     var compile = function(config,template){

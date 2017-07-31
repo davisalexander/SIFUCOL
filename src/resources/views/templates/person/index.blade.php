@@ -15,15 +15,11 @@
     </nav>
 
     <div class="table-responsive">
-        <nav class="text-center" style="padding:0;margin:0">
-            <ul class="pagination pagination-sm">
-                <li><span>&laquo;</span></li>
-                <li ng-repeat="i in persona.pagination.links">
-                    <a ng-click="index(i)">@{{i}}</a>
-                </li>
-                <li><span>&raquo;</span></li>
-            </ul>
-        </nav>
+
+        <!--<nav class="text-center" style="padding:0;margin:0">
+            <ul uib-pagination ng-model="pagination.page" total-items="pagination.total" max-size="12" items-per-page="16" max-size="pagination.total" class="pagination-sm" ng-change="index(pagination.page)"></ul>
+        </nav>-->
+
         <table class="table table-hover table-striped personindex">
             <thead>
                 <tr>
@@ -46,21 +42,13 @@
                     <td>
                         <button type="button" class="btn-rest btn-show" title="Ver"><span class="glyphicon glyphicon-eye-open"></span></button>
                         <button type="button" class="btn-rest btn-edit" ng-click="edit(this,p)" data-toggle="modal" data-target="#modal" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
-                        <button type="button" class="btn-rest btn-delete" ng-click="delete(this,$event,persona.pagination.page)" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>
+                        <button type="button" class="btn-rest btn-delete" ng-click="delete(this,$event)" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="table-responsive">
-            <nav class="text-center" style="padding:0;margin:0">
-                <ul class="pagination pagination-sm">
-                    <li><span>&laquo;</span></li>
-                    <li ng-repeat="i in persona.pagination.links">
-                        <a ng-click="index(i)">@{{i}}</a>
-                    </li>
-                    <li><span>&raquo;</span></li>
-                </ul>
-            </nav>
+        <nav class="text-center" style="padding:0;margin:0">
+            <ul uib-pagination ng-model="pagination.page" total-items="pagination.total" items-per-page="16" max-size="pagination.total" class="pagination-sm" ng-change="index(pagination.page)"></ul>
+        </nav>
     </div>
-</div>

@@ -18,7 +18,6 @@ app.controller('PersonController',function($scope,$http,$location){
         // Sets default visible columns config for `Person` index
         // if not present in persitance service.
         // If present, then gets the data stored with the specified key
-        pagination:{links:[]},
         visible:Persist.get('PersonController$persona.visible',{
             cedula:true,
             nombre:true,
@@ -27,6 +26,8 @@ app.controller('PersonController',function($scope,$http,$location){
             tels:false
         })
     };
+    $scope.pagination={page:1, total:1, last:1};
+
     Persist.set('PersonController$persona.visible',$scope.persona.visible, false);
 
     $scope.seed=function(maxrecords, wipe){
@@ -53,7 +54,7 @@ app.controller('PersonController',function($scope,$http,$location){
             if($(Content.target).find('#recordcreate').length===0){
                 $scope.$parent.modal.title="Crear expediente";
                 $scope.$parent.modal.type="primary";
-                $scope.$parent.modal.btntext="Guardar y crear expediente";
+                $scope.$parent.modal.btntext="Guardar y añadir expediente";
                 $scope.$parent.modal.click=function(){
                     data.expediente=jQueryToJson($('#recordcreate'),'name');
                     insert();
@@ -100,19 +101,18 @@ app.controller('PersonController',function($scope,$http,$location){
         );
     };
 
-    $scope.delete=function(e, $event, page){
+    $scope.delete=function(e, $event){
         if (true/*confirm('¿Realmente desea eliminar a esta persona?\n*Esta operación es irreversible')*/) {
-            $http.delete('./person/'+e.p.cedula+'?page='+page,jQueryToJson($('#indexperson'),'name'))
+            $http.delete('./person/'+e.p.cedula+'?page='+$scope.pagination.page,jQueryToJson($('#indexperson'),'name'))
             .then(
                 function(response){
                     console.log('Transaction '+((response.data.result)?'succeeded!':'failed :('));
-                    $scope.persona.pagination.links=[];
-                    for (var i = 1; i <= response.data.last; i++) {$scope.persona.pagination.links[i-1]=i;}
-                    $($event.target).parents('tr').fadeOut({complete:function(){
+                    $scope.personas.splice($scope.personas.indexOf(e.p),1);
+                    if($scope.pagination.page !== response.data.last && $scope.personas.length > 0){
                         angular.element(this).remove();
-                        if($scope.personas.length === 1){$scope.index(page-1);}
-                        else if (response.data.last+1 !== page && response.data.last !== page) {$scope.index(page);}
-                    }});
+                        $scope.index($scope.pagination.page);
+                    }
+                    else if ($scope.personas.length === 0) {$scope.index($scope.pagination.page-1);}
                 },
                 function(){
                     alert('Something went wrong :(');
@@ -122,22 +122,18 @@ app.controller('PersonController',function($scope,$http,$location){
     };
 
     $scope.index=function(page=1){
-        $scope.persona.pagination.page=(page < 1)? 1 : page;
+        $scope.pagination.page=(page < 1)? 1 : page;
 
         Content.remote=true;
         Content.template='./person/header';
         Content.compile();
 
-        /*
-        *   maxrecords: Max number of records to display
-        *   current: Current record page
-        *   request: Requested record page
-        */
         $http.get('./person?page='+page)
         .then(
             function(response){
                 $scope.personas=response.data.personas;
-                for (var i = 1; i <= response.data.last; i++) {$scope.persona.pagination.links[i-1]=i;}
+                $scope.pagination.last = response.data.last;
+                $scope.pagination.total = response.data.total;
             },
             function(){alert('Something went wrong :(');}
         );
