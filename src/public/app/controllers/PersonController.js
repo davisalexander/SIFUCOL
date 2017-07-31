@@ -35,30 +35,35 @@ app.controller('PersonController',function($scope,$http,$location){
         .then(function(response){$scope.personas=response.data.personas;});
     }
 
-    $scope.save=function(f=false){
+    $scope.save=function(){
 
-        var data={
-            persona:jQueryToJson($('#personcreate'),'name')
-        },
-        insert=function(){
-            console.log(data);
+        var insert=function(isolate=true){
+            var data = {persona:jQueryToJson($('#personcreate'),'name')};
             $http.post('./person',data)
             .then(
-                function(response){console.log('Transaction '+((response.data.success)?'succeeded!':'failed :('));},
+                function(response){
+                    if(!isolate && response.data.personsuccess){
+                        console.log('Transaction '+((response.data.personsuccess)?'succeeded!':'failed :('));
+                        data.expediente = jQueryToJson($('#recordcreate'),'name');
+                        $http.post('./records',data)
+                        .then(function(response){
+                            console.log(response.data);
+                            console.log('Transaction '+((response.data.recordsuccess)?'succeeded!':'failed :('));
+                        },
+                        function(){alert('Something went wrong :(');});
+                    }
+                },
                 function(){alert('Something went wrong :(');}    // Handle possible server errors
             );
         };
 
         if($scope.withrecord){
             // Create record form if not created
-            if($(Content.target).find('#recordcreate').length===0){
+            if($(Content.target).find('#recordcreate').length === 0){
                 $scope.$parent.modal.title="Crear expediente";
                 $scope.$parent.modal.type="primary";
                 $scope.$parent.modal.btntext="Guardar y añadir expediente";
-                $scope.$parent.modal.click=function(){
-                    data.expediente=jQueryToJson($('#recordcreate'),'name');
-                    insert();
-                };
+                $scope.$parent.modal.click=function(){insert(false);};
 
                 Content.remote=true;
                 Content.target=$('#modal .modal-body')[0];

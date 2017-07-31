@@ -52,39 +52,21 @@ class PersonaController extends Controller{
      */
      public function store(Request $request)
      {
-
          $persona=$request->persona;
 
-         // Store new person
-         $result = DB::table('persona')
-         ->insert([
-             'cedula'=>$persona['cedula'],
-             'nombre'=>$persona['nombre'],
-             'apellidos'=>$persona['apellidos'],
-             'ocupacion'=>$persona['ocupacion'],
-             'tels'=>$persona['tels'],
-             'direccion'=>$persona['direccion'],
-             'contactos'=>$persona['contacto']
+         return response()->json([
+             'personsuccess'=>DB::table('persona')
+             ->insert([
+                 'cedula'=>$persona['cedula'],
+                 'nombre'=>$persona['nombre'],
+                 'apellidos'=>$persona['apellidos'],
+                 'ocupacion'=>$persona['ocupacion'],
+                 'tels'=>$persona['tels'],
+                 'direccion'=>$persona['direccion'],
+                 'contactos'=>$persona['contacto']
+             ])
          ]);
 
-         // Store new record into person if withrecord flag is enabled (true)
-         if($result && $persona['withrecord']){
-             $expediente=$request->expediente;
-             return response()->json([
-                 'success'=>DB::table('expedientes')
-                 ->insert([
-                     'persona'=>$persona['cedula'],
-                     'ayuda'=>$expediente['ayuda'],
-                     'prioridad'=>$expediente['prioridad'],
-                     'monto'=>$expediente['monto'],
-                     'monto'=>$expediente['descripcion'],
-                     'recomendaciones'=>$expediente['recomendaciones']
-                     //'fecha_creacion'=>$request->contactos
-                 ])
-             ]);
-         }
-
-         return response()->json(['success'=>$result]);
      }
 
     /**

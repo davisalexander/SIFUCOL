@@ -49,6 +49,6 @@
         </table>
 
         <nav class="text-center" style="padding:0;margin:0">
-            <ul uib-pagination ng-model="pagination.page" total-items="pagination.total" items-per-page="16" max-size="pagination.total" class="pagination-sm" ng-change="index(pagination.page)"></ul>
+            <ul uib-pagination ng-model="pagination.page" total-items="pagination.total" max-size="12" items-per-page="16" max-size="pagination.total" class="pagination-sm" ng-change="index(pagination.page)"></ul>
         </nav>
     </div>

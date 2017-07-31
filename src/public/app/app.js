@@ -32,7 +32,6 @@ app.config(['uibPaginationConfig',function(conf){
     conf.boundaryLinks=true;
     conf.directionLinks=false;
     conf.forceEllipses=true;
-    conf.rotate=true;
 }]);
 
 app.controller('Main',function($scope,$compile,$templateRequest){

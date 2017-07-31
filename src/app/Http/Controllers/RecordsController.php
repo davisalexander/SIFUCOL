@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class RecordsController extends Controller{
 
@@ -36,7 +37,21 @@ class RecordsController extends Controller{
      */
     public function store(Request $request)
     {
-        //
+
+        $expediente = $request->expediente;
+
+         return response()->json([
+             'recordsuccess'=>DB::table('expedientes')
+             ->insert([
+                 'persona'=>$request->persona['cedula'],
+                 'ayuda'=>$expediente['ayuda'],
+                 'prioridad'=>$expediente['prioridad'],
+                 'monto'=>$expediente['monto'],
+                 'descripcion'=>$expediente['descripcion'],
+                 'recomendaciones'=>$expediente['recomendaciones']
+                 //'fecha_creacion'=>$request->contactos
+             ])
+         ]);
     }
 
     /**
