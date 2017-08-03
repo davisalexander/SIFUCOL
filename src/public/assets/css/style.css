@@ -1,9 +1,9 @@
 a{text-decoration:none !important;cursor: pointer;}
 textarea{resize: none}
-
 body{overflow: hidden}
 
 .modal-body{max-height: 70vh;overflow-y: auto}
+/*.modal-header{border-radius: 4px 4px 0 0;background-color: lightseagreen !important;}*/
 
 #main{margin-top:60px; height: calc(100vh - 60px);padding: 2em 0;overflow-y: auto;}
 
@@ -43,7 +43,8 @@ body{overflow: hidden}
     table-layout:fixed;
     max-height:80vh
 }
-.table th{text-indent: 1em}
+.table.personindex > tbody td.ng-binding{cursor: pointer}
+.table.personindex > tbody td:last-child{border-left: thin solid #ddd}
 
 .custom-navbar{
     display: block;
@@ -111,3 +112,4 @@ a.list-item, .nav-item > a{color:unset}
 .btn-rest.btn-show{color:#5CB85C}
 .btn.btn-table-header{border-radius: 0;display:block;width:100%;background-color:transparent;font-weight:bold;text-align:inherit;padding-bottom: 0}
 .btn.btn-table-header > span{margin-left: 8px}
+.btn.btn-info-custom{background-color: lightseagreen;border-color: #1DA69F}

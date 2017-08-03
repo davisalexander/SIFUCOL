@@ -8,13 +8,11 @@ app.controller('RecordsController',function($scope, $http, $location){
     Content.emptyFirst=true;
     Content.target=document.getElementById('sectionheader');
 
-    $scope.seed=function(maxrecords, wipe){
-        $http.get('./person/seed?maxrecords='+maxrecords+'&wipe='+wipe)
-        .then(function(response){$scope.personas=response.data.personas;});
-    }
+    $scope.expediente={};
+    $scope.pagination={page:1,total:1};
 
     $scope.save=function(){
-        $http.post('./person',jQueryToJson($('#personcreate'),'name'))
+        $http.post('./person',jQueryToJson($('#'),'name'))
         .then(
             function(response){
                 console.log('Transaction '+((response.data.result)?'succeeded!':'failed :('));
@@ -28,7 +26,7 @@ app.controller('RecordsController',function($scope, $http, $location){
 
     $scope.edit=function(e,scope){
 
-        mergeObjs(scope, $scope.persona.selected, ['$$hashKey']);
+        mergeObjs(scope, $scope.expediente.selected, ['$$hashKey']);
 
         $scope.$parent.modal.title="Actualizar datos de persona";
         $scope.$parent.modal.type="warning";
@@ -37,10 +35,10 @@ app.controller('RecordsController',function($scope, $http, $location){
 
         Content.remote=true;
         Content.target=$('#modal .modal-body')[0];
-        Content.template='./person/edit';
+        Content.template='./records/edit';
         Content.compile();
 
-        $scope.persona.update=scope;
+        $scope.expediente.update=scope;
     };
 
     $scope.update=function(){
@@ -48,7 +46,7 @@ app.controller('RecordsController',function($scope, $http, $location){
         .then(
             function(response){
                 console.log('Transaction '+((response.data.result)?'succeeded!':'failed :('));
-                mergeObjs($scope.persona.selected, $scope.persona.update, ['$$hashKey']);
+                mergeObjs($scope.expediente.selected, $scope.expediente.update, ['$$hashKey']);
                 $('#modal').modal('hide');
             },
             function(){
@@ -58,28 +56,11 @@ app.controller('RecordsController',function($scope, $http, $location){
     };
 
     $scope.delete=function(e, $event, page){
-        if (true/*confirm('¿Realmente desea eliminar a esta persona?\n*Esta operación es irreversible')*/) {
-            $http.delete('./person/'+e.p.cedula+'?page='+page,jQueryToJson($('#indexperson'),'name'))
-            .then(
-                function(response){
-                    console.log('Transaction '+((response.data.result)?'succeeded!':'failed :('));
-                    $scope.persona.pagination.links=[];
-                    for (var i = 1; i <= response.data.last; i++) {$scope.persona.pagination.links[i-1]=i;}
-                    $($event.target).parents('tr').fadeOut({complete:function(){
-                        angular.element(this).remove();
-                        if($scope.personas.length === 1){$scope.index(page-1);}
-                        else if (response.data.last+1 !== page && response.data.last !== page) {$scope.index(page);}
-                    }});
-                },
-                function(){
-                    alert('Something went wrong :(');
-                }    // Handle possible server errors
-            );
-        }
+
     };
 
     $scope.index=function(page=1){
-        $scope.persona.pagination.page=(page < 1)? 1 : page;
+        $scope.pagination.page=(page < 1)? 1 : page;
 
         Content.remote=true;
         Content.template='./person/header';
@@ -92,10 +73,7 @@ app.controller('RecordsController',function($scope, $http, $location){
         */
         $http.get('./person?page='+page)
         .then(
-            function(response){
-                $scope.personas=response.data.personas;
-                for (var i = 1; i <= response.data.last; i++) {$scope.persona.pagination.links[i-1]=i;}
-            },
+            function(response){},
             function(){alert('Something went wrong :(');}
         );
     };

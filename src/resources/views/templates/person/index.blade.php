@@ -1,4 +1,4 @@
-<div class="col-md-10 col-md-push-1">
+<div class="col-md-12">
 
     <nav class="navbar navbar-default navbar-sma" role="navigation">
         <span class="navbar-text"><b>Columnas visibles</b></span>
@@ -20,7 +20,7 @@
             <ul uib-pagination ng-model="pagination.page" total-items="pagination.total" max-size="12" items-per-page="16" max-size="pagination.total" class="pagination-sm" ng-change="index(pagination.page)"></ul>
         </nav>-->
 
-        <table class="table table-hover table-striped personindex">
+        <table class="table table-hover personindex">
             <thead>
                 <tr>
                     <th ng-show="persona.visible.cedula"><button type="button" class="btn btn-table-header">Id.<span class="caret"></span></button></th>
@@ -34,15 +34,15 @@
             <tbody>
                 {{ csrf_field() }}
                 <tr ng-repeat="p in personas | filter : search">
-                    <td ng-show="persona.visible.cedula">@{{p.cedula}}</td>
-                    <td ng-show="persona.visible.nombre">@{{p.nombre}}</td>
-                    <td ng-show="persona.visible.apellidos">@{{p.apellidos}}</td>
-                    <td ng-show="persona.visible.ocupacion">@{{p.ocupacion}}</td>
-                    <td ng-show="persona.visible.tels">@{{p.tels}}</td>
+                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.cedula">@{{p.cedula}}</td>
+                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.nombre">@{{p.nombre}}</td>
+                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.apellidos">@{{p.apellidos}}</td>
+                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.ocupacion">@{{p.ocupacion}}</td>
+                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.tels">@{{p.tels}}</td>
                     <td>
-                        <button type="button" class="btn-rest btn-show" title="Ver"><span class="glyphicon glyphicon-eye-open"></span></button>
                         <button type="button" class="btn-rest btn-edit" ng-click="edit(this,p)" data-toggle="modal" data-target="#modal" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
                         <button type="button" class="btn-rest btn-delete" ng-click="delete(this,$event)" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>
+                        <!--<button type="button" class="btn-rest btn-show" ng-click="" title="Ver expedientes"><span class="glyphicon glyphicon-folder-open"></span></button>-->
                     </td>
                 </tr>
             </tbody>

@@ -38,7 +38,7 @@
 <body class="container-fluid">
 
 
-    <div class="row" ng-app="App" ng-controller="Main">
+    <main class="row" ng-app="App" ng-controller="Main">
 
         @yield('static_components')
 
@@ -47,7 +47,7 @@
             <div id="viewplaceholder" class="col-lg-12" ng-view></div>
         </section>
 
-    </div>
+    </main>
 
     <!--
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" charset="utf-8"></script>

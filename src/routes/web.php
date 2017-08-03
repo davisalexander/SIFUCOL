@@ -30,15 +30,12 @@ Route::get('chart2', function () {
 
 Route::resource('person', 'PersonaController',['except'=>['edit','show','create']]);
 Route::get('person/seed', 'PersonaController@seed');
-// Route::get('person', 'PersonaController@index');
-// Route::post('person', 'PersonaController@store');
-// Route::put('person/{id}', 'PersonaController@update');
-// Route::delete('person/{id}', 'PersonaController@destroy');
 
 Route::get('person/header', function(){return view('partials.person._header');});
 Route::get('person/edit', function(){return view('partials.person._form');});
 Route::get('person/index', function(){return view('templates.person.index');});
 Route::get('person/create', function(){return view('templates.person.create');});
+Route::get('person/show', function(){return view('templates.person.show');});
 
 
 Route::resource('records', 'RecordsController',['except'=>['edit','show','create']]);

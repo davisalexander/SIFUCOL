@@ -35,6 +35,19 @@ app.controller('PersonController',function($scope,$http,$location){
         .then(function(response){$scope.personas=response.data.personas;});
     }
 
+    $scope.show=function(e, $event){
+        $scope.persona.selected=e.p;
+
+        $scope.$parent.modal.title='<span class="text-info">Información de persona </span><a href="#" class="btn btn-sm btn-primary pull-right">Ver expedientes</a>';
+        $scope.$parent.modal.footer=false;
+        $scope.$parent.modal.click=function(){};
+
+        Content.remote=true;
+        Content.target=$('#modal .modal-body')[0];
+        Content.template='./person/show';
+        Content.compile();
+    }
+
     $scope.save=function(){
 
         var insert=function(isolate=true){

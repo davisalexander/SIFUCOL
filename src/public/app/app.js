@@ -52,7 +52,7 @@ app.controller('Main',function($scope,$compile,$templateRequest){
         },
         get:function(key, def){return (!persistData[key])? def : persistData[key];}
     };
-    $scope.modal={};
+    $scope.modal={footer:true};
     $scope.content={
         remote:false,
         emptyFirst:false,

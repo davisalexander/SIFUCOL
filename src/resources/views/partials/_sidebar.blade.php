@@ -1,4 +1,4 @@
-<aside class="col-sm-3 col-md-2 sidebar">
+<aside class="col-sm-2 col-md-2 sidebar">
     <div class="brand nav-item"><a href="#">Brand Name</a></div>
     <ul class="list-group">
         <li><span class="list-header" href="#">Navegación</span></li>
@@ -13,7 +13,7 @@
         <li>
             <a class="list-item" data-toggle="collapse" data-target="#records"><span class="glyphicon glyphicon-folder-open"></span> Expedientes</a>
             <ul id="records" class="list-group child collapse">
-                <li><a class="list-item" href="#!records/create">Nuevo expediente</a></li>
+                <li><a class="list-item" href="#!records/index">Ver expedientes</a></li>
             </ul>
         </li>
         <li><a class="list-item" href="#"><span class="glyphicon glyphicon-home"></span> Visitantes</a></li>
