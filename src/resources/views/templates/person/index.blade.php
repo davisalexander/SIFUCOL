@@ -40,8 +40,8 @@
                     <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.ocupacion">@{{p.ocupacion}}</td>
                     <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.tels">@{{p.tels}}</td>
                     <td>
-                        <button type="button" class="btn-rest btn-edit" ng-click="edit(this,p)" data-toggle="modal" data-target="#modal" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
-                        <button type="button" class="btn-rest btn-delete" ng-click="delete(this,$event)" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>
+                        <button type="button" class="btn-rest btn-edit" ng-click="edit(p)" data-toggle="modal" data-target="#modal" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button type="button" class="btn-rest btn-delete" ng-click="delete(p,$event)" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>
                         <!--<button type="button" class="btn-rest btn-show" ng-click="" title="Ver expedientes"><span class="glyphicon glyphicon-folder-open"></span></button>-->
                     </td>
                 </tr>

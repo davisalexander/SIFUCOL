@@ -7,7 +7,7 @@
             </header>
             <section class="modal-body"></section>
             <footer class="modal-footer" ng-show="modal.footer">
-                <button type="button" class="center-block btn btn-primary" ng-click="modal.click(this)">@{{modal.btntext}}</button>
+                <button type="button" class="center-block btn btn-@{{modal.type}}" ng-click="modal.click(this)">@{{modal.btntext}}</button>
             </footer>
         </div>
     </div>

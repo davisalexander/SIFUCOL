@@ -37,8 +37,15 @@ class PersonaController extends Controller{
 
     public function index(){
         $result=DB::table('persona')->paginate($this->maxrecords);
+        $personas=$result->items();
+
+        for ($i = 0, $length = count($personas); $i < $length; $i++) {
+            $personas[$i] = (array)$personas[$i];
+            $personas[$i]['expedientes'] = DB::table('expedientes')->where('persona', $personas[$i]['cedula'])->get();
+        }
+
         return response()->json([
-            'personas'=>$result->items(),
+            'personas'=>$personas,
             'last'=>$result->lastPage(),
             'total'=>$result->total()
         ]);

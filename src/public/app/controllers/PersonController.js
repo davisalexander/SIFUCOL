@@ -26,7 +26,7 @@ app.controller('PersonController',function($scope,$http,$location){
             tels:false
         })
     };
-    $scope.pagination={page:1, total:1, last:1};
+    $scope.pagination=Persist.get('PersonController$pagination',{page:1, total:1, last:1});
 
     Persist.set('PersonController$persona.visible',$scope.persona.visible, false);
 
@@ -35,8 +35,10 @@ app.controller('PersonController',function($scope,$http,$location){
         .then(function(response){$scope.personas=response.data.personas;});
     }
 
-    $scope.show=function(e, $event){
-        $scope.persona.selected=e.p;
+    $scope.show=function(scope, $event){
+
+        $scope.persona.selected=scope;
+        Persist.set('PersonController$persona.selected',scope, true);
 
         $scope.$parent.modal.title='<span class="text-info">Información de persona </span><a href="#" class="btn btn-sm btn-primary pull-right">Ver expedientes</a>';
         $scope.$parent.modal.footer=false;
@@ -88,7 +90,7 @@ app.controller('PersonController',function($scope,$http,$location){
 
     };
 
-    $scope.edit=function(e,scope){
+    $scope.edit=function(scope){
 
         mergeObjs(scope, $scope.persona.selected, ['$$hashKey']);
 
@@ -119,13 +121,13 @@ app.controller('PersonController',function($scope,$http,$location){
         );
     };
 
-    $scope.delete=function(e, $event){
+    $scope.delete=function(scope, $event){
         if (true/*confirm('¿Realmente desea eliminar a esta persona?\n*Esta operación es irreversible')*/) {
-            $http.delete('./person/'+e.p.cedula+'?page='+$scope.pagination.page,jQueryToJson($('#indexperson'),'name'))
+            $http.delete('./person/'+scope.cedula+'?page='+$scope.pagination.page,jQueryToJson($('#indexperson'),'name'))
             .then(
                 function(response){
                     console.log('Transaction '+((response.data.result)?'succeeded!':'failed :('));
-                    $scope.personas.splice($scope.personas.indexOf(e.p),1);
+                    $scope.personas.splice($scope.personas.indexOf(scope),1);
                     if($scope.pagination.page !== response.data.last && $scope.personas.length > 0){
                         angular.element(this).remove();
                         $scope.index($scope.pagination.page);

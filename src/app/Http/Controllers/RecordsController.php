@@ -16,7 +16,9 @@ class RecordsController extends Controller{
      */
     public function index()
     {
-        //
+        // return response()->json()->([
+        //     'expedientes' => DB::select('exec my_stored_procedure(?,?,..)',[1,2,3]);
+        // ]);
     }
 
     /**

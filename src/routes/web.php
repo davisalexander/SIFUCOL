@@ -11,21 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', function () {return view('index');});
+Route::get('home', function () {return view('templates.home');});
 
-Route::get('home', function () {
-    return view('templates.home');
-});
-
-Route::get('chart1', function () {
-    return view('charts.example1');
-});
-
-Route::get('chart2', function () {
-    return view('charts.example2');
-});
+Route::get('chart1', function () {return view('charts.example1');});
+Route::get('chart2', function () {return view('charts.example2');});
 
 
 Route::resource('person', 'PersonaController',['except'=>['edit','show','create']]);
@@ -39,9 +29,9 @@ Route::get('person/show', function(){return view('templates.person.show');});
 
 
 Route::resource('records', 'RecordsController',['except'=>['edit','show','create']]);
-Route::get('records/seed', 'RecordsController@seed');
 
 Route::get('records/header', function(){return view('partials.records._header');});
 Route::get('records/edit', function(){return view('partials.records._form');});
 Route::get('records/index', function(){return view('templates.records.index');});
 Route::get('records/create', function(){return view('partials.records._form');});
+Route::get('records/show', function(){return view('partials.records.show');});

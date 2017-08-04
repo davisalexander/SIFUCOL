@@ -113,3 +113,8 @@ a.list-item, .nav-item > a{color:unset}
 .btn.btn-table-header{border-radius: 0;display:block;width:100%;background-color:transparent;font-weight:bold;text-align:inherit;padding-bottom: 0}
 .btn.btn-table-header > span{margin-left: 8px}
 .btn.btn-info-custom{background-color: lightseagreen;border-color: #1DA69F}
+
+.record-status{margin: 0 10px;border-radius:50%;height: 10px;width: 10px;display: inline-block;vertical-align: middle}
+.record-status.record-status-hi{background-color: #D9534F}
+.record-status.record-status-med{background-color: #F0AD4E}
+.record-status.record-status-low{background-color: #5CB85C}
