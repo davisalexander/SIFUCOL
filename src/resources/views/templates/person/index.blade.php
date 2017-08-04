@@ -1,6 +1,6 @@
 <div class="col-md-12">
 
-    <nav class="navbar navbar-default navbar-sma" role="navigation">
+    <nav class="navbar navbar-default navbar-sm" role="navigation">
         <span class="navbar-text"><b>Columnas visibles</b></span>
         <form class="navbar-form" style="padding-top:4px">
             <label class="checkbox-inline"><input type="checkbox" ng-model="persona.visible.cedula">Identificación</label>
@@ -34,11 +34,11 @@
             <tbody>
                 {{ csrf_field() }}
                 <tr ng-repeat="p in personas | filter : search">
-                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.cedula">@{{p.cedula}}</td>
-                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.nombre">@{{p.nombre}}</td>
-                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.apellidos">@{{p.apellidos}}</td>
-                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.ocupacion">@{{p.ocupacion}}</td>
-                    <td ng-click="show(this,p)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.tels">@{{p.tels}}</td>
+                    <td ng-click="show(p,$event)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.cedula">@{{p.cedula}}</td>
+                    <td ng-click="show(p,$event)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.nombre">@{{p.nombre}}</td>
+                    <td ng-click="show(p,$event)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.apellidos">@{{p.apellidos}}</td>
+                    <td ng-click="show(p,$event)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.ocupacion">@{{p.ocupacion}}</td>
+                    <td ng-click="show(p,$event)" data-toggle="modal" data-target="#modal" ng-show="persona.visible.tels">@{{p.tels}}</td>
                     <td>
                         <button type="button" class="btn-rest btn-edit" ng-click="edit(p)" data-toggle="modal" data-target="#modal" title="Editar"><span class="glyphicon glyphicon-pencil"></span></button>
                         <button type="button" class="btn-rest btn-delete" ng-click="delete(p,$event)" title="Eliminar"><span class="glyphicon glyphicon-trash"></span></button>
@@ -52,3 +52,5 @@
             <ul uib-pagination ng-model="pagination.page" total-items="pagination.total" max-size="12" items-per-page="16" max-size="pagination.total" class="pagination-sm" ng-change="index(pagination.page)"></ul>
         </nav>
     </div>
+
+</div>

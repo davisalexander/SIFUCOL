@@ -55,8 +55,10 @@
     -->
     <script src="{{asset('libs/jquery/jquery3.2.1.min.js')}}"></script>
     <script src="{{asset('assets/bootstrap3/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('animatedModal/animatedModal.min.js')}}"></script>
     <script type="text/javascript">
         $(document).ready(function(){
+
             $('.sidebar a.list-item').click(function(e){
                 $('.sidebar a.list-item').removeClass('active');
 
@@ -64,22 +66,15 @@
                     $(e.currentTarget).addClass('active');
                 }
             });
-
-            $('.notification-list').ready(function(){
-                $('.notification .close').click(function(){
-                    $(this).parent().addClass('animated zoomOut');
-                    $(this).parent().one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){$(this).remove();});
-
-                    // Check if notification list is empty,
-                    // (true) show message
-                });
-            });
-
-            // $('form .dropdown-menu').ready(function(){
-            //     $('.dropdown *').click(function(e){
-            //         e.stopPropagation();
+            // $('.notification-list').ready(function(){
+            //     $('.notification .close').click(function(){
+            //         $(this).parent().addClass('animated zoomOut');
+            //         $(this).parent().one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){$(this).remove();});
+            //
+            //         // Check if notification list is empty,
+            //         // (true) show message
             //     });
-            // });
+            });
 
             // $('form.async').ready(function(e){
             //     $('form.async').submit(function(e){

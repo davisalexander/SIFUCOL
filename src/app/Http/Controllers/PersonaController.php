@@ -113,4 +113,6 @@ class PersonaController extends Controller{
             'last'=>$last
         ]);
     }
+
+    public function records($id){}
 }

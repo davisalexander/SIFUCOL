@@ -26,6 +26,7 @@ Route::get('person/edit', function(){return view('partials.person._form');});
 Route::get('person/index', function(){return view('templates.person.index');});
 Route::get('person/create', function(){return view('templates.person.create');});
 Route::get('person/show', function(){return view('templates.person.show');});
+Route::get('person/records', function(){return view('templates.person.records');});
 
 
 Route::resource('records', 'RecordsController',['except'=>['edit','show','create']]);

@@ -40,7 +40,7 @@ app.controller('PersonController',function($scope,$http,$location){
         $scope.persona.selected=scope;
         Persist.set('PersonController$persona.selected',scope, true);
 
-        $scope.$parent.modal.title='<span class="text-info">Información de persona </span><a href="#" class="btn btn-sm btn-primary pull-right">Ver expedientes</a>';
+        $scope.$parent.modal.title='<span class="text-info">Información de persona </span>';
         $scope.$parent.modal.footer=false;
         $scope.$parent.modal.click=function(){};
 
@@ -168,6 +168,7 @@ app.controller('PersonController',function($scope,$http,$location){
 
         case 'index':
         $scope.index();
+        $('#animatedModal').animatedModal();
         break;
     }
 });
